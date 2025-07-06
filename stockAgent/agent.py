@@ -1,26 +1,5 @@
 from google.adk.agents import Agent
-
-def get_stock_price(symbol: str) -> dict:
-    """Retrieves the current stock price for a given stock symbol.
-
-    Args:
-        symbol (str): The stock symbol to retrieve the price for.
-
-    Returns:
-        dict: status and result or error msg.
-    """
-    if symbol.lower() == "aapl":
-        return {
-            "status": "success",
-            "price": 150.25,
-            "currency": "USD",
-        }
-    else:
-        return {
-            "status": "error",
-            "error_message": f"Stock price for '{symbol}' is not available.",
-        }
-
+from stockAgent.stock_tools import stock_recommendation, get_stock_price
 
 root_agent = Agent(
     name="stock_predictor_agent",
@@ -29,7 +8,11 @@ root_agent = Agent(
         "Agent to answer questions about stock tickers."
     ),
     instruction=(
-        "You are a helpful agent who can answer user questions about stocks."
+        "You are a helpful agent who can answer user questions about stocks and their curent prices and recommendations."
     ),
-    tools=[get_stock_price]
+    tools=[stock_recommendation, 
+           get_stock_price],
 )
+
+# Run the agent 
+# adk web
