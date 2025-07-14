@@ -1,5 +1,6 @@
 import yfinance as stockData
 
+
 def stock_recommendation(stock_ticker: str) -> str:
     """
     Function to provide stock recommendation based on moving averages.
@@ -38,6 +39,7 @@ def stock_recommendation(stock_ticker: str) -> str:
     except Exception as e:
         return f"Error fetching data for {stock_ticker}: {e}"
 
+
 def get_stock_price(stock_ticker: str) -> str:
     """
     Function to get the current stock price.
@@ -52,3 +54,21 @@ def get_stock_price(stock_ticker: str) -> str:
         return f"The current price of {stock_ticker} is ${current_price:.2f}."
     except Exception as e:
         return f"Error fetching price for {stock_ticker}: {e}"   
+    
+# get the company name and summary for a stock ticker using yfinance
+def get_company_summary(stock_ticker: str) -> str:
+    """
+    Function to get the company name and summary for a stock ticker.
+    Args:
+        stock_ticker (str): The stock ticker symbol to fetch the company information for.
+    Returns:
+        str: Company name and summary or an error message.
+    """
+    try:
+        stock = stockData.Ticker(stock_ticker)
+        company_info = stock.info
+        company_name = company_info.get('longName', 'N/A')
+        company_summary = company_info.get('longBusinessSummary', 'No summary available.')
+        return f"{company_name}\n {company_summary}"
+    except Exception as e:
+        return f"Error fetching company information for {stock_ticker}: {e}"
